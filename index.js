@@ -36,7 +36,7 @@ app.get('/instrument-file', async (req, res) => {
 app.listen(serverPort, () => console.log(`listening on port ${serverPort}!`))
 
 const getInstrumentServiceUrl = (hostname) => {
-  const host = process.env.instrument_host || hostname;
+  const host = process.env.instrument_host || `${hostname}.hack-istio-instruments.svc.cluster.local`;
   const port = process.env.instrument_port || 8080;
   const resource = process.env.instrument_resource || 'instrument-id';
   const url = `http://${host}:${port}/${resource}`;
