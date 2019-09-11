@@ -1,4 +1,4 @@
-const express = require('express')
+const express = require('express');
 const http = require('http');
 const fs = require('fs');
 const app = express();
@@ -11,20 +11,27 @@ app.use((req, res, next) => {
 
 app.get('/instrument', async (req, res) => {
   console.log('/instrument: calling', req.query.name);
-  const response = await callInstrumentService(getInstrumentServiceUrl(), req.query.name);
-  return res.send(`Hello ${response}!`)
+  try {
+    const response = await callInstrumentService(getInstrumentServiceUrl(req.query.name));
+    return res.json(response);
+  } catch (error) {
+    console.log('/instrument - error', error);
+    return res.status(500).send(JSON.stringify(error));
+  }
 })
 
 app.get('/instrument-file', async (req, res) => {
   console.log('/instrument-file: loading file', req.query.name)
   const instrumentFile = await loadInstrumentFile(req.query.name);
-  return res.send(instrumentFile);
+  return res.type('mpeg3').send(instrumentFile);
 });
 
 app.listen(process.env.server_port, () => console.log(`listening on port ${process.env.server_port}!`))
 
-const getInstrumentServiceUrl = () => {
-  const url = `${process.env.instrument_host}:${process.env.instrument_port}/${process.env.instrument_resource}`;
+const getInstrumentServiceUrl = (endpoint) => {
+  const endpointUrl = process.env.instrument_hostport || endpoint;
+  const resource = process.env.instrument_resource || 'instrument-id';
+  const url = `http://${endpointUrl}/${resource}`;
   console.log('instrument service url', url);
   return url;
 }
@@ -32,10 +39,22 @@ const getInstrumentServiceUrl = () => {
 const callInstrumentService = (url) => {
   return new Promise((resolve, reject) => http.get(url, (res) => {
     console.log('statusCode:', res.statusCode);
+    if (res.statusCode !== 200) {
+      reject(new Error(`Request failed (status code: ${res.statusCode})`));
+    }
 
-    res.on('data', (d) => {
-      resolve(d);
+    let data = '';
+    res.on('data', (chunk) => {
+      data += chunk;
     });
+    res.on('end', () => {
+      if (data.length > 0) {
+        data = JSON.parse(data);
+      } else {
+        data = {};
+      }
+      resolve(data);
+    })
 
   }).on('error', (e) => {
     console.error(e);
