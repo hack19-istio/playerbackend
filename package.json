@@ -1,0 +1,22 @@
+{
+  "name": "playerbackend",
+  "version": "1.0.0",
+  "description": "backend for hackathon player",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hack19-istio/playerbackend.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hack19-istio/playerbackend/issues"
+  },
+  "homepage": "https://github.com/hack19-istio/playerbackend#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
