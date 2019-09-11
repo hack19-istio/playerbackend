@@ -1,0 +1,8 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: bass1
+  namespace: hack-istio-instruments
+spec:
+  type: ExternalName
+  externalName: bass1.hack-istio-instruments.svc.cluster.local

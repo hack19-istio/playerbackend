@@ -26,3 +26,5 @@ spec:
           value: 3000
         - name: instrument_port
           value: 8080
+        - name: instrument_resource
+          value: instrument

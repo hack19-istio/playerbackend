@@ -1,0 +1,12 @@
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+ namespace: hack-istio-instruments
+ name: allow-backend-player
+spec:
+ podSelector:
+   matchLabels:
+     app: player-backend
+ ingress:
+ - from:
+   - namespaceSelector: {hack-istio-player-backend}
