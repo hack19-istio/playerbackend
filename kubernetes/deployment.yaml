@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: hack-istio
+  name: player-backend
+  labels:
+    app: player-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: player-backend
+  template:
+    metadata:
+      labels:
+        app: player-backend
+    spec:
+      containers:
+      - name: player-backend
+        image: elessar1ch/playerbackend:latest
+        ports:
+        - containerPort: 3000
+        env:
+        - name: server_port
+          value: 3000
+        - name: instrument_host
+          value: 'http://localhost'
+        - name: instrument_port
+          value: 8080
+        - name: instrument_resource
+          value: 'instrument'
