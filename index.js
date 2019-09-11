@@ -15,6 +15,12 @@ app.get('/instrument-file', async (req, res) => {
   return res.send(instrumentFile);
 });
 
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 app.listen(process.env.server_port, () => console.log(`listening on port ${process.env.server_port}!`))
 
 const getInstrumentServiceUrl = () => {
