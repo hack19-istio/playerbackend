@@ -1,0 +1,62 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: bass1
+  namespace: hack-istio-player-backend
+spec:
+  type: ExternalName
+  externalName: bass1.hack-istio-instruments.svc.cluster.local
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: bass2
+  namespace: hack-istio-player-backend
+spec:
+  type: ExternalName
+  externalName: bass2.hack-istio-instruments.svc.cluster.local
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: hh1
+  namespace: hack-istio-player-backend
+spec:
+  type: ExternalName
+  externalName: hh1.hack-istio-instruments.svc.cluster.local
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: kicksnare1
+  namespace: hack-istio-player-backend
+spec:
+  type: ExternalName
+  externalName: kicksnare1.hack-istio-instruments.svc.cluster.local
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: piano1
+  namespace: hack-istio-player-backend
+spec:
+  type: ExternalName
+  externalName: piano1.hack-istio-instruments.svc.cluster.local
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: piano2
+  namespace: hack-istio-player-backend
+spec:
+  type: ExternalName
+  externalName: piano2.hack-istio-instruments.svc.cluster.local
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: rhodes1
+  namespace: hack-istio-player-backend
+spec:
+  type: ExternalName
+  externalName: rhodes1.hack-istio-instruments.svc.cluster.local
