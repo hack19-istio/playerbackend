@@ -29,7 +29,7 @@ app.get('/instrument-file', async (req, res) => {
     return res.type('mpeg3').send(instrumentFile);
   } catch (error) {
     console.log('/instrument-file - error', error);
-    return res.status(500).send(JSON.stringify(error));
+    return res.status(404).json({'msg': `could not find instrument ${req.query.name}`});
   }
 });
 
@@ -46,9 +46,9 @@ const getInstrumentServiceUrl = (hostname) => {
 
 const callInstrumentService = (url) => {
   return new Promise((resolve, reject) => http.get(url, (res) => {
-    console.log('statusCode:', res.statusCode);
+    console.log('callInstrumentService, statusCode:', res.statusCode);
     if (res.statusCode !== 200) {
-      reject(new Error(`Request failed (status code: ${res.statusCode})`));
+      reject(new Error(`callInstrumentService, Request failed (status code: ${res.statusCode})`));
     }
 
     let data = '';
@@ -65,7 +65,7 @@ const callInstrumentService = (url) => {
     })
 
   }).on('error', (e) => {
-    console.error(e);
+    console.error('callInstrumentService', e);
     reject(e);
   }));
 }
