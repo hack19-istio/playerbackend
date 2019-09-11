@@ -3,6 +3,8 @@ const http = require('http');
 const fs = require('fs');
 const app = express();
 
+const serverPort = process.env.server_port || 3000;
+
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -31,12 +33,13 @@ app.get('/instrument-file', async (req, res) => {
   }
 });
 
-app.listen(process.env.server_port, () => console.log(`listening on port ${process.env.server_port}!`))
+app.listen(serverPort, () => console.log(`listening on port ${serverPort}!`))
 
-const getInstrumentServiceUrl = (endpoint) => {
-  const endpointUrl = process.env.instrument_hostport || endpoint;
+const getInstrumentServiceUrl = (hostname) => {
+  const host = process.env.instrument_host || hostname;
+  const port = process.env.instrument_port || 8080;
   const resource = process.env.instrument_resource || 'instrument-id';
-  const url = `http://${endpointUrl}/${resource}`;
+  const url = `http://${host}:${port}/${resource}`;
   console.log('instrument service url', url);
   return url;
 }
