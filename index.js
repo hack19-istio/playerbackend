@@ -21,9 +21,14 @@ app.get('/instrument', async (req, res) => {
 })
 
 app.get('/instrument-file', async (req, res) => {
-  console.log('/instrument-file: loading file', req.query.name)
-  const instrumentFile = await loadInstrumentFile(req.query.name);
-  return res.type('mpeg3').send(instrumentFile);
+  console.log('/instrument-file: loading file', req.query.name);
+  try {
+    const instrumentFile = await loadInstrumentFile(req.query.name);
+    return res.type('mpeg3').send(instrumentFile);
+  } catch (error) {
+    console.log('/instrument-file - error', error);
+    return res.status(500).send(JSON.stringify(error));
+  }
 });
 
 app.listen(process.env.server_port, () => console.log(`listening on port ${process.env.server_port}!`))
